@@ -287,9 +287,9 @@ int PoserMPFIT(SurviveObject *so, PoserData *pd) {
 		survive_attach_configf(ctx, "sensor-variance-per-sec", &d->sensor_variance_per_second);
 		survive_attach_configf(ctx, "sensor-variance", &d->sensor_variance);
 
-#ifdef DEBUG_NAN
-		feenableexcept(FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW);
-#endif
+//#ifdef DEBUG_NAN
+//		feenableexcept(FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW);
+//#endif
 
 		SV_INFO("Initializing MPFIT:");
 		SV_INFO("\trequired-meas: %d", d->required_meas);
@@ -356,7 +356,7 @@ int PoserMPFIT(SurviveObject *so, PoserData *pd) {
 		} else if (d->useIMU) {
 			survive_imu_tracker_integrate_imu(&d->tracker, imu);
 
-			SurvivePose out = {};
+			SurvivePose out;// = {};
 			survive_imu_tracker_predict(&d->tracker, imu->timecode, &out);
 			if (!quatiszero(out.Rot)) {
 				SurvivePose vel = survive_imu_velocity(&d->tracker);
@@ -364,7 +364,7 @@ int PoserMPFIT(SurviveObject *so, PoserData *pd) {
 			}
 			// SV_INFO("%+.07f %+.07f %+.07f", imu->gyro[0], imu->gyro[1], imu->gyro[2]);
 		} else if (d->useKalman) {
-			SurvivePose out = {};
+			SurvivePose out;//= {};
 			survive_imu_tracker_predict(&d->tracker, imu->timecode, &out);
 			if (!quatiszero(out.Rot)) {
 				SurvivePose vel = survive_imu_velocity(&d->tracker);
