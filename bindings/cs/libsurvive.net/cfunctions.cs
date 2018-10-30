@@ -52,7 +52,7 @@ namespace libsurvive
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_install_button_fn")]
         public static extern void Survive_install_button_fn(SurviveContextPtr ctx, button_process_func fbp);
 
-        [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_install_raw_pose_fn")]
+        [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_install_pose_fn")]
         public static extern void Survive_install_raw_pose_fn(SurviveContextPtr ctx, raw_pose_func fbp);
 
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_install_lighthouse_pose_fn")]
@@ -87,12 +87,12 @@ namespace libsurvive
         public static extern int Survive_default_htc_config_process(SurviveObjectPtr so, string ct0conf, int len);
 
 
-        [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_codename")]
-        public static extern string Survive_object_codename(SurviveObjectPtr so);
+        [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_codename_csharp")]
+        public static extern void Survive_object_codename(SurviveObjectPtr so, byte[] buf);
 
 
-        [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_drivername")]
-        public static extern char Survive_object_drivername(SurviveObjectPtr so);
+        [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_drivername_csharp")]
+        public static extern char Survive_object_drivername(SurviveObjectPtr so, byte[] buf);
 
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_charge")]
         public static extern byte Survive_object_charge(SurviveObjectPtr so);
@@ -115,6 +115,8 @@ namespace libsurvive
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_get_so_by_name")]
         public static extern IntPtr Survive_get_so_by_name(IntPtr ctx, string name);
 
+        [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_cal_get_status")]
+        public static extern int Survive_get_cal_status(SurviveContextPtr ctx/*,char* description, int description_length*/);
         //#pragma warning restore IDE1006 // Naming Styles
     }
 
