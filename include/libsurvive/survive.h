@@ -144,8 +144,6 @@ SURVIVE_EXPORT const char *survive_object_drivername(SurviveObject *so);
 SURVIVE_EXPORT const int8_t survive_object_charge(SurviveObject *so);
 SURVIVE_EXPORT const bool survive_object_charging(SurviveObject *so);
 
-SURVIVE_EXPORT const void survive_object_codename_csharp(SurviveObject *so, char *out);
-SURVIVE_EXPORT const void survive_object_drivername_csharp(SurviveObject *so, char *out);
 SURVIVE_EXPORT const SurvivePose *survive_object_pose(SurviveObject *so);
 
 SURVIVE_EXPORT int8_t survive_object_sensor_ct(SurviveObject *so);

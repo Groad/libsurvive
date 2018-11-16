@@ -755,6 +755,3 @@ const SurvivePose *survive_object_pose(SurviveObject *so) { return &so->OutPose;
 int8_t survive_object_sensor_ct(SurviveObject *so) { return so->sensor_ct; }
 const FLT *survive_object_sensor_locations(SurviveObject *so) { return so->sensor_locations; }
 const FLT *survive_object_sensor_normals(SurviveObject *so) { return so->sensor_normals; }
-
-const void survive_object_codename_csharp(SurviveObject *so, char *out) { strcpy(out, so->codename); }
-const void survive_object_drivername_csharp(SurviveObject *so, char *out) { strcpy(out, so->drivername); }
