@@ -755,3 +755,7 @@ const SurvivePose *survive_object_pose(SurviveObject *so) { return &so->OutPose;
 int8_t survive_object_sensor_ct(SurviveObject *so) { return so->sensor_ct; }
 const FLT *survive_object_sensor_locations(SurviveObject *so) { return so->sensor_locations; }
 const FLT *survive_object_sensor_normals(SurviveObject *so) { return so->sensor_normals; }
+const FLT *survive_object_accel_bias(SurviveObject *so) { return so->acc_bias; }
+const FLT *survive_object_gyro_bias(SurviveObject *so) { return so->gyro_bias; }
+const FLT *survive_object_accel_scale(SurviveObject *so) { return so->acc_scale; }
+const FLT *survive_object_gyro_scale(SurviveObject *so) { return so->gyro_scale; }
