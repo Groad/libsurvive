@@ -127,7 +127,8 @@ void survive_default_button_process(SurviveObject * so, uint8_t eventType, uint8
 
 void survive_default_raw_pose_process(SurviveObject *so, uint32_t timecode, SurvivePose *pose) {
 	// print the pose;
-	//printf("Pose: [%1.1x][%s][% 08.8f,% 08.8f,% 08.8f] [% 08.8f,% 08.8f,% 08.8f,% 08.8f]\n", lighthouse, so->codename, pos[0], pos[1], pos[2], quat[0], quat[1], quat[2], quat[3]);
+	//printf("Pose: [%1.1x][%s][% 08.8f,% 08.8f,% 08.8f] [% 08.8f,% 08.8f,% 08.8f,% 08.8f]\n", timecode, so->codename,
+	//	   pose->Pos[0], pose->Pos[1], pose->Pos[2], pose->Rot[0], pose->Rot[1], pose->Rot[2], pose->Rot[3]);
 	so->OutPose = *pose;
 	so->OutPose_timecode = timecode;
 	survive_recording_raw_pose_process(so, timecode, pose);
@@ -164,6 +165,10 @@ int survive_default_htc_config_process(SurviveObject *so, char *ct0conf, int len
 }
 void survive_default_imu_process( SurviveObject * so, int mask, FLT * accelgyromag, uint32_t timecode, int id )
 {
+	//printf("imu [%f] [%f] [%f] [%f] [%f] [%f] [%f] [%f] [%f]\n", 
+	//	accelgyromag[0], accelgyromag[1], accelgyromag[2], 
+	//	accelgyromag[3], accelgyromag[4], accelgyromag[5], 
+	//	accelgyromag[6], accelgyromag[7], accelgyromag[8]);
 	PoserDataIMU imu = {
 		.hdr =
 			{

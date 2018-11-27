@@ -244,7 +244,7 @@ def generate_ccode(name, args, expressions):
     sys.stderr.write("Running CSE\n")
     cse_output = sp.cse( flatten, order='none' )
     cnt = 0
-    arg_str = lambda (idx, a): ("const FLT *%s" % str(flatten_args(a)[0]).split('_', 1)[0] ) if isinstance(a, tuple) else ("FLT " + str(a))
+    arg_str = lambda idx, a: ("const FLT *%s" % str(flatten_args(a)[0]).split('_', 1)[0] ) if isinstance(a, tuple) else ("FLT " + str(a))
     print("static inline void gen_%s(FLT* out, %s) {" % (name, ", ".join( map(arg_str, enumerate(args)) )))
 
     # Unroll struct types
@@ -266,8 +266,8 @@ def generate_ccode(name, args, expressions):
                 print("\t*(out++) = %s;" % sp.ccode(item1))
         else:
             print("\t*(out++) = %s;" % sp.ccode(item))
-    print "}"
-    print ""
+    print ("}")
+    print ("")
     
 #print(min_form)
 

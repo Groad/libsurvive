@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace libsurvive
-{
+namespace libsurvive {
+
     using SurviveContextPtr = IntPtr;
     using SurviveObjectPtr = IntPtr;
     using SurvivePosePtr = IntPtr;
+    using SurviveGyroPtr = IntPtr;
 
     [StructLayout(LayoutKind.Sequential)]
-    public class SurvivePose
-    {
+    public class SurvivePose {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
         public double[] Pos; // Position in the form xyz
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public double[] Rot; // Quaternion in the form wxyz        
+        public double[] Rot; // Quaternion in the form wxyz
     }
 
-    class Cfunctions
-    {
-        //#pragma warning disable IDE1006 // Naming Styles
+    class LibsurviveFunctions {
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_init_internal")]
         public static extern SurviveContextPtr Survive_init_internal(int argc, string[] args);
 
@@ -32,7 +28,6 @@ namespace libsurvive
 
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_startup")]
         public static extern int Survive_startup(SurviveContextPtr ctx);
-
 
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_install_htc_config_fn")]
         public static extern void Survive_install_htc_config_fn(SurviveContextPtr ctx, htc_config_func fbp);
@@ -64,12 +59,11 @@ namespace libsurvive
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_cal_install")]
         public static extern void Survive_cal_install(SurviveContextPtr ctx);
 
-
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_default_light_process")]
         public static extern void Survive_default_light_process(SurviveObjectPtr so, int sensor_id, int acode, int timeinsweep, UInt32 timecode, UInt32 length, UInt32 lh);
 
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_default_imu_process")]
-        public static extern void Survive_default_imu_process(SurviveObjectPtr so, int mode, double[] accelgyro, UInt32 timecode, int id);
+        public static extern void Survive_default_imu_process(SurviveObjectPtr so, int mode, IntPtr accelgyro, UInt32 timecode, int id);
 
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_default_angle_process")]
         public static extern void Survive_default_angle_process(SurviveObjectPtr so, int sensor_id, int acode, UInt32 timecode, double length, double angle, UInt32 lh);
@@ -86,10 +80,8 @@ namespace libsurvive
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_default_htc_config_process")]
         public static extern int Survive_default_htc_config_process(SurviveObjectPtr so, string ct0conf, int len);
 
-
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_codename_csharp")]
         public static extern void Survive_object_codename(SurviveObjectPtr so, byte[] buf);
-
 
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_drivername_csharp")]
         public static extern char Survive_object_drivername(SurviveObjectPtr so, byte[] buf);
@@ -103,24 +95,18 @@ namespace libsurvive
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_pose")]
         public static extern IntPtr Survive_object_pose(SurviveObjectPtr so);
 
-
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_sensor_locations")]
         public static extern double[] Survive_object_sensor_locations(SurviveObjectPtr so);
 
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_object_sensor_normals")]
         public static extern double[] Survive_object_sensor_normals(SurviveObjectPtr so);
 
-
-
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_get_so_by_name")]
         public static extern IntPtr Survive_get_so_by_name(IntPtr ctx, string name);
 
         [DllImport("libsurvive", CallingConvention = CallingConvention.StdCall, EntryPoint = "survive_cal_get_status")]
         public static extern int Survive_get_cal_status(SurviveContextPtr ctx/*,char* description, int description_length*/);
-        //#pragma warning restore IDE1006 // Naming Styles
     }
-
-
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate int htc_config_func(SurviveObjectPtr so, string ct0conf, int len);
 
@@ -131,7 +117,7 @@ namespace libsurvive
     public delegate void light_process_func(SurviveObjectPtr so, int sensor_id, int acode, int timeinsweep, UInt32 timecode, UInt32 length, UInt32 lighthouse);
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate void imu_process_func(SurviveObjectPtr so, int mask, double[] accelgyro, UInt32 timecode, int id);
+    public delegate void imu_process_func(SurviveObjectPtr so, int mask, SurviveGyroPtr accelgyro, UInt32 timecode, int id);
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate void angle_process_func(SurviveObjectPtr so, int sensor_id, int acode, UInt32 timecode, double length, double angle, UInt32 lh);
@@ -142,9 +128,6 @@ namespace libsurvive
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate void raw_pose_func(SurviveObjectPtr so, byte lighthouse, SurvivePose pose);
 
-
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate void lighthouse_pose_func(SurviveContextPtr ctx, byte lighthouse, SurvivePose lighthouse_pose, SurvivePose object_pose);
-
-
 }
