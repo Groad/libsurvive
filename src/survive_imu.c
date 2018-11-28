@@ -338,7 +338,7 @@ void survive_imu_tracker_integrate_observation(uint32_t timecode, SurviveIMUTrac
 	if (!quatiszero(tracker->last_pose.Rot.v) && time_diff != 0. && tracker->use_obs_velocity) {
 		// assert(time_diff < 1.0);
 
-		SurviveVelocity velocity = {};
+		SurviveVelocity velocity = { 0 };
 		LinmathQuat vDiff;
 		quatfind(vDiff, tracker->last_pose.Rot.v, vel_pose.Rot.v);
 		struct SurviveContext *ctx = tracker->so->ctx;
